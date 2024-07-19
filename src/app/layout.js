@@ -1,5 +1,11 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './theme';
+import FixAppBar from "../widgets/primary/appBar/FixAppBar";
+import { Toolbar } from "@mui/material";
+import ReduxProviderWrapper from "./GlobalRedux/provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,7 +17,23 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+      </head>
+
+      <body className={inter.className} style={{ backgroundColor: '#fff', overflow: 'hidden' }}>
+        <AppRouterCacheProvider>
+          <ReduxProviderWrapper >
+            <ThemeProvider theme={theme}>
+              <FixAppBar />
+
+              {children}
+            </ThemeProvider>
+          </ReduxProviderWrapper>
+
+
+        </AppRouterCacheProvider>
+      </body>
     </html>
   );
 }
