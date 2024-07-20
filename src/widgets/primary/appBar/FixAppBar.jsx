@@ -89,9 +89,13 @@ export default function FixAppBar(props) {
             <List>
                 {navItems.map((item) => (
                     <ListItem key={item} disablePadding>
-                        <ListItemButton sx={{ textAlign: 'center' }}>
+                        <Link href='/search/diagrams/diagram'>
                             <ListItemText primary={item} />
-                        </ListItemButton>
+                        </Link>
+
+                        {/* <ListItemButton sx={{ textAlign: 'center' }}>
+                            <ListItemText primary={item} />
+                        </ListItemButton> */}
                     </ListItem>
                 ))}
             </List>
@@ -102,7 +106,7 @@ export default function FixAppBar(props) {
         <>
             <AppBar position="fixed" elevation={0} component={'nav'} >
                 <Container maxWidth="xl" disableGutters={true} >
-                    
+
 
                     {pathName != '/search/diagrams/diagram' ?
                         <Toolbar >
@@ -178,7 +182,7 @@ export default function FixAppBar(props) {
             </AppBar>
 
             {pathName != '/search/diagrams/diagram' ?
-            <Toolbar ></Toolbar> : null }
+                <Toolbar ></Toolbar> : null}
 
             <nav>
                 <Drawer
