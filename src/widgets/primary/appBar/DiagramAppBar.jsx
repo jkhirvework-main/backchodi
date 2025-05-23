@@ -107,7 +107,7 @@ export default function DiagramAppBar() {
 
                     <Box sx={{ display: { xs: 'none', xl: 'block' } }} >
                         <Box display={'flex'}>
-                            <Typography color={'black'} sx={{ ml: 1 }}>2019 BMW 330i Sedan (G20)</Typography>
+                            <Typography color={'black'} sx={{ ml: 1 }}>2019 XUV 500</Typography>
                             <Typography color={'black'} fontSize={14} sx={{ ml: 1 }}>L4-2.0L Turbo (B46D)</Typography>
                         </Box>
                     </Box>

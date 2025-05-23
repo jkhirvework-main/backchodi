@@ -97,7 +97,7 @@ const MobileBottomSheet = ({ name, thumbUrl, code }) => {
             <Box sx={{ py: 4, px: 3 }}>
                 <Box display={'flex'} alignItems={'center'}>
                     <Paper display="inline-block" sx={{ p: 1.5, borderRadius: 2 }} elevation={1} variant='outlined'>
-                        <Image src={'/home/images/sensor.png'} width={56} height={56} alt='test' />
+                        <Image src={'https://i.ibb.co/9mnBNtTQ/pngegg-1.png'} width={56} height={56} alt='test' />
                     </Paper>
 
                     <Box sx={{ ml: 3 }}>
@@ -138,7 +138,7 @@ const DesktopBottomSheet = ({ thumbUrl, name, code, component }) => {
                 </CardHeader>
                 <Box display={'flex'} sx={{ my: 2 }}>
                     <Paper sx={{ p: 1, ml: 2 }} variant='outlined'>
-                        <Image src={thumbUrl} width={56} height={56} />
+                        <Image src={'https://i.ibb.co/9mnBNtTQ/pngegg-1.png'} width={56} height={56} />
                     </Paper>
                     <Box>
                         <Typography sx={{ mt: 0, ml: 3, fontSize: 16 }} variant='h6'>{name}</Typography>

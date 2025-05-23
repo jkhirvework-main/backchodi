@@ -37,7 +37,7 @@ export default function ComponentPinoutExpandableView({ rows }) {
               {!isSmallScreen && (
               <>
                 <TableCell align="center"><strong>Type</strong></TableCell>
-                <TableCell align="center"><strong>View</strong></TableCell>
+                {/* <TableCell align="center"><strong>View</strong></TableCell> */}
               </>
             )}
 
@@ -67,7 +67,7 @@ export default function ComponentPinoutExpandableView({ rows }) {
                     <>
                       <TableCell align="center">{row.type}</TableCell>
                       
-                      <TableCell align="center"><Link underline='none' sx={{color: Utils.primaryColor}} href={'#'}>View</Link> </TableCell>
+                      {/* <TableCell align="center"><Link underline='none' sx={{color: Utils.primaryColor}} href={'#'}>View</Link> </TableCell> */}
                     </>
                   )}
 

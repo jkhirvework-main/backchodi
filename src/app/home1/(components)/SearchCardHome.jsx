@@ -39,7 +39,7 @@ export default function SearchCardHome({ title, id, description }) {
 
                     <Box display={'flex'}>
                         <Avatar variant="rounded" sx={{ backgroundColor: '#EDF4FF', height: 56, width: 56 }} >
-                            <Avatar variant="rounded" sx={{ backgroundColor: '#EDF4FF', height: 36, width: 36 }} src='/home/images/tata.svg' >
+                            <Avatar variant="rounded" sx={{ backgroundColor: '#EDF4FF', height: 36, width: 36 }} src='/home/images/Mahindra SUV.png' >
                             </Avatar>
                         </Avatar>
 
@@ -50,7 +50,7 @@ export default function SearchCardHome({ title, id, description }) {
 
                         <Box sx={{ py: 1 }}>
                             <Typography variant="contained" size="small" sx={{ backgroundColor: '#EDF4FF', color: Utils.primaryColor, fontSize: 16, fontWeight: 500, ml: 2, px: 2, py: 1, borderRadius: 1 }}>
-                                ABS
+                                EMS
                             </Typography>
                         </Box>
 

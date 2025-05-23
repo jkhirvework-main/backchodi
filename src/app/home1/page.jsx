@@ -110,7 +110,7 @@ export default function Home1() {
                 </Box>
 
                 <Box sx={{ mt: 8 }}>
-                    <CardHeader title={'Recent Search'} />
+                    <CardHeader title={'Recent Search'} sx={{color: 'black'}} />
 
                     <Grid container spacing={4}>
                         <Grid item xl={4}>

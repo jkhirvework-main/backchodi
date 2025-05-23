@@ -56,7 +56,7 @@ const SideBarContent = () => {
 
                 <Stack direction="row" spacing={2} alignItems="center"  >
                     <Image src={'/icon-192x192.png'} width={30} height={30} alt='Logo'/>
-                    <Typography sx={{ fontSize: 22, fontWeight: 700, letterSpacing: 1.2 }}>CARCLINIC FIX</Typography>
+                    <Typography sx={{ fontSize: 22, fontWeight: 700, letterSpacing: 1.2 }}>FIXOMOTIVE</Typography>
                 </Stack>
 
             </Box>

@@ -58,8 +58,8 @@ export default function Home2() {
                     <CardContent >
 
                         <CenteredBox>
-                            <Typography className={montserrat.className} sx={{ typography: { xl: 'h2', lg: 'h2', md: 'h2', sm: 'h3', xs: 'h4' } }} >The Worlds Most  Accurate Unit Testing  Generative AI.</Typography>
-                            <Typography  sx={{typography: {xl: 'body1', lg: 'body1', md: 'body1'}, mt: 2,  display: { xs: 'none', sm: 'block', lg: 'block' } }} >Contrary to popular belief, Lorem Ipsum is not simply random text. </Typography>
+                            <Typography className={montserrat.className} sx={{ typography: { xl: 'h2', lg: 'h2', md: 'h2', sm: 'h3', xs: 'h4' } }} >The Ultimate Interactive Automotive Wiring Diagram.</Typography>
+                            <Typography  sx={{typography: {xl: 'body1', lg: 'body1', md: 'body1'}, mt: 2,  display: { xs: 'none', sm: 'block', lg: 'block' } }} >Explore every wire and connection with the most advanced interactive wiring diagram. </Typography>
                         </CenteredBox>
 
                         <Container maxWidth={'lg'}>
