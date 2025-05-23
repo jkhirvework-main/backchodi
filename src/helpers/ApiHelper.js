@@ -14,9 +14,10 @@ const getHeaders = () => {
 }
 
 class ApiHelper {
-    static API_URL = 'http://192.168.1.12:4000/'
+    // static API_URL = 'http://192.168.1.12:4000/'
     // static API_URL = 'http://localhost:4000/'
     // static API_URL = 'https://editorbackend.autoclinic.site/'
+    static API_URL = 'https://carclinicfixbackend.autoclinic.site/'
 
     static axiosApi = axios.create({
         baseURL: this.API_URL,

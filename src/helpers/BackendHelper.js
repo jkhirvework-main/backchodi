@@ -2,7 +2,8 @@ import axios from "axios";
 
 
 class BackendHelper {
-    static API_URL = 'http://192.168.1.12:4001/'
+    // static API_URL = 'http://192.168.1.12:4001/'
+    static API_URL = 'https://editorbackend.autoclinic.site/'
 
     static axiosApi = axios.create({
         baseURL: this.API_URL,
