@@ -3,7 +3,7 @@ import React from 'react'
 import CheckIcon from '@mui/icons-material/Check';
 import shortid from 'shortid';
 
-export default function CheckList({ mt = 0, list = [], minWidth = '46px', gap = 0, fontSize = 16 }) {
+export default function CheckList({ mt = 0, list = [], minWidth = '46px', gap = 0, fontSize = 16, recomended = false }) {
     return (
         <>
             <List sx={{ mt, pb: 2, pt: 0 }}>
@@ -14,7 +14,7 @@ export default function CheckList({ mt = 0, list = [], minWidth = '46px', gap = 
                                 <CheckIcon fontSize='small' sx={{ color: '#006AD3' }} />
                             </ListItemIcon>
                             <ListItemText
-                                primary={<Typography fontSize={fontSize}>{text}</Typography>}
+                                primary={<Typography fontSize={fontSize} color={recomended ? 'white' : 'black'}>{text}</Typography>}
                             />
                         </ListItem>
                     )

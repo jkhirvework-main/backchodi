@@ -14,6 +14,7 @@ import Utils from '@/utils/Utils';
 import WiringAnimation from '@/widgets/diagram/connection/WiringAnimation';
 import DiagramSearchComponent from '@/widgets/diagram/components/DiagramSearchComponent';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 
 const IconWithText = () => {
@@ -68,7 +69,7 @@ const ClickableIcon = ({ onCallback, closeCallback, icon: Icon }) => {
             }
             setIsOpen(!isOpen);
         }} >
-            {<Icon sx={{ color: isOpen ? Utils.primaryColor : 'white' }} />}
+            {<Icon sx={{ color: isOpen ? Utils.primaryColor : 'grey' }} />}
         </IconButton>
     );
 }
@@ -83,10 +84,10 @@ const OnlyIcons = () => {
 
 
             <IconButton sx={{ ml: { xs: 0, xl: 1 } }} onClick={() => Utils.diagramViewer.reset()}>
-                <RefreshOutlinedIcon sx={{ color: '#fff' }} />
+                <RefreshOutlinedIcon />
             </IconButton>
             <IconButton sx={{ mr: { xs: 0, xl: 2 }, ml: { xs: 0, xl: 1 } }}>
-                <InfoOutlinedIcon sx={{ color: '#fff' }} />
+                <InfoOutlinedIcon />
             </IconButton>
         </Box>
     );
@@ -94,23 +95,25 @@ const OnlyIcons = () => {
 
 export default function DiagramAppBar() {
     const router = useRouter();
+    
+
     return (
         <>
-            (<AppBar  >
+            (<AppBar elevation={1} >
                 <Toolbar style={{ minHeight: 52 }} disableGutters={true} sx={{ px: 1 }}>
                     <IconButton >
-                        <ArrowBackIcon sx={{ color: '#fff' }} onClick={() => router.back()}/>
+                        <ArrowBackIcon onClick={() => router.back()} />
                     </IconButton>
 
                     <Box sx={{ display: { xs: 'none', xl: 'block' } }} >
                         <Box display={'flex'}>
-                            <Typography sx={{ ml: 1 }}>2019 BMW 330i Sedan (G20)</Typography>
-                            <Typography fontSize={14} sx={{ ml: 1 }}>L4-2.0L Turbo (B46D)</Typography>
+                            <Typography color={'black'} sx={{ ml: 1 }}>2019 BMW 330i Sedan (G20)</Typography>
+                            <Typography color={'black'} fontSize={14} sx={{ ml: 1 }}>L4-2.0L Turbo (B46D)</Typography>
                         </Box>
                     </Box>
 
                     <Box sx={{ display: { xs: 'block', xl: 'none' } }}>
-                        <Typography sx={{ ml: 1 }}>(B46D)</Typography>
+                        <Typography color={'black'} sx={{ ml: 1 }}>(B46D)</Typography>
                     </Box>
 
 
@@ -118,7 +121,7 @@ export default function DiagramAppBar() {
 
                     <OnlyIcons />
 
-                    <Button variant='contained' sx={{ mr: 1, ml: 1, display: { xs: 'none', xl: 'block' } }}>Change Vehicle</Button>
+                    <Button variant='outlined' sx={{ mr: 1, ml: 1, display: { xs: 'none', xl: 'block' } }} component={Link} href='/home2'>Change Vehicle</Button>
                 </Toolbar>
             </AppBar>
             <Toolbar style={{ minHeight: 12 }} />

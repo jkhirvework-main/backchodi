@@ -4,14 +4,17 @@ import Config from "@/utils/Config";
 import Naming from "@/utils/Naming";
 import { fabric } from "fabric";
 import Storage from "@/utils/Storage";
+import ManageManager from "./widgets/ManageManager";
 
 class DiagramViewer {
 
     constructor(data) {
+        console.log(data, 'data')
         this.dataParser(data)
         this.data = data;
         this.initCanvas();
         Utils.diagramViewer = this;
+        ManageManager.setUp();
 
 
         this.space = false;
@@ -21,13 +24,17 @@ class DiagramViewer {
         this.moving = false;
         this.tmpLastPos = null;
 
-        new DataLoader(data)
+        new DataLoader(data);
+
+        window.addEventListener('resize', function () {
+            this.window.location.reload()
+        });
     }
 
     initCanvas = () => {
         Utils.fabric = fabric;
 
-        if(!Utils.canvas){
+        if (!Utils.canvas) {
             this.canvas = new fabric.Canvas('canvas', {
                 height: Config.canvasHeight,
                 width: Config.canvasWidth,
@@ -35,35 +42,34 @@ class DiagramViewer {
                 renderOnAddRemove: true,
                 stopContextMenu: true,
                 fireRightClick: true,
+                selectable: false,
                 preserveObjectStacking: true,
                 backgroundColor: 'white',
             })
-    
-            const mRect = new fabric.Rect( {
+
+            const mRect = new fabric.Rect({
                 height: this.data.height,
                 width: this.data.width,
-                // stroke: 'black',
-                // strokeWidth: 1,
                 fill: 'white',
                 hasControls: false,
                 selectable: false,
-                shadow: {blur: 1, offsetX: 0, offsetY: 0},
+                shadow: { blur: 1, offsetX: 0, offsetY: 0 },
                 objectCaching: false
             })
-    
+
             this.canvas.add(mRect)
-    
+
             Utils.canvas = this.canvas;
             Utils.backgroundWidth = this.data.width;
             Utils.backgroundHeight = this.data.height;
             Config.backgroundWidth = this.data.width;
             Config.backgroundHeight = this.data.height;
-    
+
             this.setBtnsCallBack();
             this.setCallBack();
             this.setUpZoom();
         }
-        
+
 
     }
 
@@ -115,7 +121,7 @@ class DiagramViewer {
 
             if (e2.changedTouches) {
 
-                lastTouch = {x: e2.changedTouches[0].clientX, y: e2.changedTouches[0].clientY}
+                lastTouch = { x: e2.changedTouches[0].clientX, y: e2.changedTouches[0].clientY }
             }
 
         })
@@ -123,14 +129,14 @@ class DiagramViewer {
         Utils.canvas.on('mouse:move', (e) => {
             this.tmpLastPos = e.absolutePointer;
             // this.space &&
-        
+
             if (this.down && (e.e instanceof MouseEvent || ((e.e instanceof TouchEvent) && e.e.touches.length < 2))) {
                 const e2 = e.e;
 
                 let delta = new fabric.Point(e2.movementX, e2.movementY);
                 if (e2.changedTouches) {
-                    delta = new fabric.Point( e2.changedTouches[0].clientX - lastTouch.x, e2.changedTouches[0].clientY - lastTouch.y);
-                    lastTouch = {x: e2.changedTouches[0].clientX, y: e2.changedTouches[0].clientY}
+                    delta = new fabric.Point(e2.changedTouches[0].clientX - lastTouch.x, e2.changedTouches[0].clientY - lastTouch.y);
+                    lastTouch = { x: e2.changedTouches[0].clientX, y: e2.changedTouches[0].clientY }
                 }
 
                 window.requestAnimationFrame(() => {
@@ -142,16 +148,16 @@ class DiagramViewer {
         Utils.canvas.on('mouse:up', (e) => {
             // this.space && 
 
-            
+
             // if(e.e.)
 
-            
+
             if (this.down && !(e.e instanceof TouchEvent)) {
                 const e2 = e.e;
                 let delta = new fabric.Point(e2.movementX, e2.movementY);
                 if (e2.changedTouches) {
-                    delta = new fabric.Point( e2.changedTouches[0].clientX - lastTouch.x, e2.changedTouches[0].clientY - lastTouch.y);
-                    lastTouch = {x: e2.changedTouches[0].clientX, y: e2.changedTouches[0].clientY}
+                    delta = new fabric.Point(e2.changedTouches[0].clientX - lastTouch.x, e2.changedTouches[0].clientY - lastTouch.y);
+                    lastTouch = { x: e2.changedTouches[0].clientX, y: e2.changedTouches[0].clientY }
                 }
                 Utils.canvas.relativePan(delta)
             }
@@ -169,7 +175,7 @@ class DiagramViewer {
 
         Utils.fabric.util.animate({
             startValue: zoom,
-            endValue: parseInt(zoom) + 1,
+            endValue: zoom < 1 ? zoom + 0.1 : parseInt(zoom) + 1,
             duration: 300,
             easing: Utils.fabric.util.ease.easeOutQuad,
             onChange: (v) => {
@@ -180,13 +186,13 @@ class DiagramViewer {
         })
     }
 
-    zoomOut = () => {
+    setZoomValue = (value) => {
         const centerWidth = Config.canvasWidth / 2, centerHeight = Config.canvasHeight / 2;
         const zoom = Utils.canvas.getZoom();
 
         Utils.fabric.util.animate({
             startValue: zoom,
-            endValue: zoom > 1 ? zoom - 1 : zoom - 0.1,
+            endValue: value,
             duration: 300,
             easing: Utils.fabric.util.ease.easeOutQuad,
             onChange: (v) => {
@@ -195,6 +201,26 @@ class DiagramViewer {
                 // Utils.renderAll()
             }
         })
+
+    }
+
+    zoomOut = () => {
+        const centerWidth = Config.canvasWidth / 2, centerHeight = Config.canvasHeight / 2;
+        const zoom = Utils.canvas.getZoom();
+
+        if (zoom - 0.1 > 0.1) {
+            Utils.fabric.util.animate({
+                startValue: zoom,
+                endValue: zoom > 1 ? zoom - 1 : zoom - 0.1,
+                duration: 300,
+                easing: Utils.fabric.util.ease.easeOutQuad,
+                onChange: (v) => {
+                    Utils.canvas.zoomToPoint({ x: centerWidth, y: centerHeight }, v);
+                }, onComplete: () => {
+                    // Utils.renderAll()
+                }
+            })
+        }
     }
 
     setUpZoom = () => {
@@ -217,11 +243,11 @@ class DiagramViewer {
 
         console.log('worked')
         document.addEventListener('touchstart', (e) => {
-            
+
             if (e.touches.length === 2) {
                 touchStartDistance = getTouchDistance(e.touches);
                 isPanning = false;
-            } 
+            }
             // else if (e.touches.length === 1) {
             //     isPanning = true;
             //     const touch = e.touches[0];
@@ -236,7 +262,7 @@ class DiagramViewer {
                 const zoom = this.canvas.getZoom() * (newDistance / touchStartDistance);
                 touchStartDistance = newDistance;
                 handleZoomTouch(e, zoom);
-            } 
+            }
             // else if (isPanning && e.touches.length === 1) {
             //     handlePanTouch(e);
             // }
@@ -330,7 +356,7 @@ class DiagramViewer {
     }
 
     hideConnections = () => {
-        for(const connection of Storage.connections){
+        for (const connection of Storage.connections) {
             connection.hide();
         }
 
@@ -338,7 +364,7 @@ class DiagramViewer {
     }
 
     showConnections = () => {
-        for(const connection of Storage.connections){
+        for (const connection of Storage.connections) {
             connection.show();
         }
 
@@ -348,13 +374,13 @@ class DiagramViewer {
     reset = () => {
         const center = Config.canvasWidth / 2 - Config.backgroundWidth / 2;
 
-        
 
-        for(const component of Storage.components){
+
+        for (const component of Storage.components) {
             component.unSelect()
         }
 
-        for(const connection of Storage.connections){
+        for (const connection of Storage.connections) {
             connection.unselect();
         }
 

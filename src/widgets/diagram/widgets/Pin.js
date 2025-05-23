@@ -66,6 +66,8 @@ class Pin extends CompMaster {
 
         return this;
     }
+
+    
     
     getPin = () => {
         return this.pin;

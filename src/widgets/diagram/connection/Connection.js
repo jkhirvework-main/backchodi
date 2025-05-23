@@ -25,6 +25,7 @@ class Connection {
         this.shiftNWire = null;
         this.connMap = [];
         this.wires = [];
+        this.type = preData ? preData.type ? preData.type : Naming.ConnectionTypes[0] : Naming.ConnectionTypes[0];
 
 
         if (source instanceof Circle) {
@@ -54,8 +55,10 @@ class Connection {
             const last = this.preData.wires[this.preData.wires.length - 1];
             this.targetWireDirection = this.target.getWireDirection(last.x2, last.y2)
 
-            this.loadPreData()
+            
         }
+
+        this.loadPreData()
 
         if (!Storage.connections.includes(this)) {
             Storage.connections.push(this);

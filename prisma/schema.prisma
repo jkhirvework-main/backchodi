@@ -1,0 +1,265 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Oem {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  img       String
+  slug      String   @unique @default("")
+  models    Model[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  DtcMap    DtcMap[]
+}
+
+model Model {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  parId     String
+  img       String   @default("")
+  slug      String   @unique @default("")
+  oem       Oem      @relation(fields: [parId], references: [id])
+  engines   Engine[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Engine {
+  id        String        @id @default(cuid())
+  name      String
+  startYear Int
+  endYear   Int
+  parId     String
+  model     Model         @relation(fields: [parId], references: [id])
+  Module    InfoTypeMap[]
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+model InfoType {
+  id   String        @id @default(cuid())
+  name String        @unique
+  icon String
+  Maps InfoTypeMap[]
+}
+
+model InfoTypeMap {
+  id         String      @id @default(cuid())
+  infoType   InfoType    @relation(fields: [infoTypeId], references: [id])
+  infoTypeId String
+  engine     Engine      @relation(fields: [engineId], references: [id])
+  engineId   String
+  ModuleMap  ModuleMap[]
+}
+
+model Module {
+  id        String      @id @default(cuid())
+  name      String      @unique
+  // parId      String
+  // engine     InfoTypeMap @relation(fields: [parId], references: [id])
+  icon      String
+  // SubModules SubModule[]
+  ModuleMap ModuleMap[]
+}
+
+model ModuleMap {
+  id            String      @id @default(cuid())
+  infoTypeMapId String
+  InfoTypeMap   InfoTypeMap @relation(fields: [infoTypeMapId], references: [id])
+  moduleId      String
+  Module        Module      @relation(fields: [moduleId], references: [id])
+  SubModileMap  SubModule[]
+}
+
+model SubModule {
+  id                 String          @id @default(cuid())
+  name               String          @unique
+  parId              String
+  module             ModuleMap       @relation(fields: [parId], references: [id])
+  wiringDiagramParts WiringDiagram[]
+  WiringDiagramMap   WiringDiagramMap[]
+}
+
+model WiringDiagramMap {
+  id String @id @default(cuid())
+  name String
+  wiringDiagramId Int
+  subModuleId String
+  SubModule SubModule @relation(fields: [subModuleId], references: [id])
+}
+
+model WiringDiagram {
+  id                  String    @id @default(cuid())
+  name                String
+  uId                 String
+  parId               String
+  width               Int
+  height              Int
+  baseWires           Json      @default("[]")
+  components          Json      @default("[]")
+  groups              Json      @default("[]")
+  connections         Json      @default("[]")
+  multiWireConnectors Json      @default("[]")
+  textWidgets         Json      @default("[]")
+  connectors          Json      @default("[]")
+  data                Json      @default("[]")
+  wiringDiagramId     Int
+  WiringDiagramPart   SubModule @relation(fields: [parId], references: [id])
+}
+
+model Mob {
+  id   String @id @default(cuid())
+  mob  String @unique
+  user User?
+}
+
+model Staff {
+  id            String         @id @default(cuid())
+  name          String
+  role          String         @default("Staff")
+  mob           String         @unique
+  email         String         @unique
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  isBlocked     Boolean        @default(false)
+  Plans         Plan[]
+  Notifications Notification[]
+}
+
+model Plan {
+  id                  String        @id @default(cuid())
+  title               String
+  description         String
+  originalPrice       Int           @default(0)
+  price               Int           @default(0)
+  yearlyOriginalPrice Int           @default(0)
+  yearlyPrice         Int           @default(0)
+  yearlyDuration      Int           @default(365)
+  duration            Int           @default(1)
+  features            Json          @default("[]")
+  createdBy           String
+  Staff               Staff         @relation(fields: [createdBy], references: [id])
+  isBlocked           Boolean       @default(false)
+  gatewayIds          Json          @default("{}")
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+  img                 String        @default("")
+  transactions        Transaction[]
+}
+
+model User {
+  id              String         @id @default(cuid())
+  name            String         @default("")
+  email           String
+  mobId           String         @unique
+  mob             Mob            @relation(fields: [mobId], references: [id])
+  workShopName    String
+  workShopAddress String
+  isBlocked       Boolean        @default(false)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  transactions    Transaction[]
+  history         History[]
+  infoRequest     InfoRequest[]
+  notifications   Notification?
+  fcmTokens       FcmTokens?
+}
+
+model Transaction {
+  id             String   @id @default(cuid())
+  userId         String
+  amount         Int
+  refObj         Json     @default("{}")
+  user           User     @relation(fields: [userId], references: [id])
+  planName       String   @default("")
+  currency       String   @default("INR")
+  planId         String
+  plan           Plan     @relation(fields: [planId], references: [id])
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  duration       Int
+  status         String   @default("sucess")
+  isBuyedByStaff Boolean  @default(false)
+  buyedBy        String   @default("")
+}
+
+model DtcMap {
+  id            String @id @default(cuid())
+  originalOemId String
+  originalOem   Oem    @relation(fields: [originalOemId], references: [id])
+  initOemId     Int
+}
+
+model PinOut {
+  id                   String @id @default(cuid())
+  parId                String
+  zone                 Int
+  ecm_id               String
+  comp_id              String
+  comp_name            String @default("")
+  comp_pin             Int
+  ecm_pin              Int
+  code                 String @default("")
+  flow                 String @default("e-c")
+  wire                 String @default("black")
+  signal               String
+  condition            String
+  cv                   String
+  dv                   String
+  cn                   String
+  dn                   String
+  oscilloscope_setting String
+}
+
+model History {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  data      Json
+  type      String   @default("info")
+  createdAt DateTime @default(now())
+}
+
+model InfoRequest {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  make        String
+  model       String
+  year        String
+  engine      String
+  module      String
+  description String
+  createdAt   DateTime @default(now())
+  resolved    Boolean  @default(false)
+}
+
+model Notification {
+  id               String   @id @default(cuid())
+  userId           String?   @unique 
+  user             User?     @relation(fields: [userId], references: [id])
+  title            String
+  message          String
+  image            String
+  createdAt        DateTime @default(now())
+  isRead           Boolean  @default(false)
+  staffId          String   
+  staff            Staff    @relation(fields: [staffId], references: [id])
+  notificationType String
+}
+
+model FcmTokens {
+  id        String @id @default(cuid())
+  userId    String @unique
+  user      User   @relation(fields: [userId], references: [id])
+  token     String
+  deviceType String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

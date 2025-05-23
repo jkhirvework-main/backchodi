@@ -6,6 +6,12 @@ class Storage {
     static components = [];
     static circles = []
     static connections = [];
+    static connectors = [];
+    static endComponents = [];
+    static textWidegts = [];
+    static nCircles = [];
+    static shields = [];
+    static arrowGroups = [];
 
     static findComponentById = (id) => this.components.find(component => component.id === id)
     static findCircleById = id => this.circles.find(circle => circle.id === id)
@@ -14,7 +20,11 @@ class Storage {
     static findConnectorById = id => this.connectors.find(connector => connector.id === id);
     static findEndComponentById = id => this.endComponents.find(endComponent => endComponent.id === id);
     static findGroupById = id => this.groupRects.find(groupRect => groupRect.id === id)
-
+    static findConnectorById = id => this.connectors.find(connector => connector.id === id);
+    static findTextById = id => this.textWidegts.find(text => text.id === id);
+    static findNCircleById = id => this.nCircles.find(nCircle => nCircle.id === id);
+    static findShieldById = (id) => this.shields.find(shield => shield.id === id);
+    static findArrowGroupById = id => this.arrowGroups.find(arrowGroup => arrowGroup.id === id);
 
     static findWireById = (id) => {
         for(const connection of this.connections){
@@ -24,6 +34,11 @@ class Storage {
                 }
             }
         }
+    }
+
+    
+    static addWidgetToDispatch = (dispatch, object) => {
+        
     }
 
     
@@ -42,6 +57,8 @@ class Storage {
                 }
             }
         }
+
+        return {pin: null, component: null}
     }
 
 
@@ -58,6 +75,12 @@ class Storage {
                     return { pin, component };
                 }
             }
+        }
+    }
+
+    static addTextWidgetToComponent = (component, textWidget) => {
+        if (!component.textWidgets.includes(textWidget)) {
+            component.textWidgets.push(textWidget);
         }
     }
 

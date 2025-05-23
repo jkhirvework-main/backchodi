@@ -6,6 +6,7 @@ class Naming {
     static MultiConnectorPin = 'multi_connector_pin'
     static BaseWire = 'baseWire'
     static Circle = 'circle'
+    static NCircle = 'nCircle'
     static MultiConnector = 'multiConnector'
     static Widget = 'widget';
     static Background = 'background'
@@ -17,12 +18,19 @@ class Naming {
     static TriangleComponent = 'triangleComponent';
     static EndComponent = 'endComponent';
     static ComponentCheck = 'component_check';
+    static Shield = 'shield';
+    static Fuse = 'fuse';
+    static InterConnectedComponentFix = 'interConnectedComponentFix';
+
+    static NormalShield = 'normalShield';
+    static CylinderShield = 'cylinderShield';
 
     static Bottom = 'bottom';
     static Top = 'top';
     static Right = 'right';
     static Left = 'left'
     static Center = 'center'
+
 
     static LeftKey = 1;
     static RightKey = 3;
@@ -35,6 +43,12 @@ class Naming {
     static isBottom = (direction) => direction === Naming.Bottom
     static isVertical = (direction) => (Naming.isTop(direction) || Naming.isBottom(direction))
     static isHorizontal = (direction) => !Naming.isVertical(direction)
+
+    static reverseDirection = (direction) => this.isVertical(direction) ? this.isTop(direction) ? Naming.Bottom : Naming.Top : this.isLeft(direction) ? Naming.Right : Naming.Left;
+    static isShield = (obj) => obj.type === Naming.Shield;
+
+
+    static ConnectionTypes = ['Signal', 'Ground', 'High', 'Low'];
 }
 
 export default Naming;

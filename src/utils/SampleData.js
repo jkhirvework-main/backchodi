@@ -108,6 +108,28 @@ class SampleData {
         title: '2019 BMW 330i Sedan (G20)',
         subHead: 'L4-2.0L Turbo (B46D)'
     }]
+
+    static Languages = [{
+        label: 'English',
+        value: 'english'
+    }, {
+        label: 'Hindi',
+        value: 'hindi'
+    }, {
+        label: 'Panjabi',
+        value: 'panjabi'
+    }]
+
+    static  SelectTypeOptions = [{
+        label: 'Trouble Codes',
+        value: 'hello'
+    }, {
+        label: 'Wiring Diagram',
+        value: 'hello'
+    }, {
+        label: 'Wiring Diagram',
+        value: 'hello'
+    }]
 }
 
 export default SampleData;

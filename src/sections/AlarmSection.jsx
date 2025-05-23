@@ -23,7 +23,7 @@ export default function AlarmSection() {
                     <Grid container>
                         <Grid item xl={3} lg={3} xs={12} sm={12} >
                             <Box display={'flex'} justifyContent={'center'} justifyItems={'center'} alignItems={'center'}>
-                                <Image src='/home/images/img-clock.svg' width={100} height={137} />
+                                <Image src='/home/images/speaker.png' width={137} height={137} />
                             </Box>
                         </Grid>
 
@@ -42,7 +42,6 @@ export default function AlarmSection() {
                                 <Grid item xl={3} xs={12}>
                                     <Box sx={{ textAlign: { sm: 'center', xl: 'left', lg: 'left', xs: 'center', } }} >
                                         <Button variant='contained' fullWidth={true} sx={{ backgroundColor: 'white', color: 'black', '&:hover': { backgroundColor: '#f0f0f0' }, height: 48, mt: 1, px: 6 }} >Try The Demo</Button>
-
                                     </Box>
                                 </Grid>
                             </Grid>
