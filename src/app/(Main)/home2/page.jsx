@@ -54,7 +54,7 @@ export default function Home2() {
     return (
         <main style={{ backgroundColor: '#f9f9fb', height: '100vh' }}>
             <Container maxWidth={'xl'} sx={{ py: { xl: 8, lg: 8, md: 8, sm: 0, xs: 0 }, px: { xs: 0, sm: 0, xl: 3, lg: 3, md: 0 } }}>
-                <Card className={styles.card} variant='outlined' sx={{ background: 'linear-gradient(45deg, #0276e8 30%, #0097FE 90%)', backgroundImage: `url(${"/home/images/frame.png"})`, color: 'white', borderRadius: { xs: 0, sm: 0, xl: 2, lg: 2, md: 2 } }}>
+                <Card className={styles.card} variant='outlined' sx={{ background: 'linear-gradient(45deg, #0276e8 30%, #0097FE 90%)', backgroundImage: `url(${"https://i.ibb.co/69wmNMX/Frame.png"})`, color: 'white', borderRadius: { xs: 0, sm: 0, xl: 2, lg: 2, md: 2 } }}>
                     <CardContent >
 
                         <CenteredBox>
