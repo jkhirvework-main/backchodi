@@ -1,6 +1,7 @@
 
 import Config from "@/utils/Config";
 import Naming from "@/utils/Naming";
+import Storage from "@/utils/Storage";
 import Utils from "@/utils/Utils";
 
 const { default: CompMaster } = require("../widgets/CompMaster");
@@ -16,9 +17,9 @@ class Pin extends CompMaster {
         this.rDirection = data.rDirection ? data.rDirection : Naming.Top;
         this.angle = data.angle ? data.angle : 0;
         this.isVisible = true
+        this.isConnectionTypeVisible = data.isConnectionTypeVisible
 
-
-
+        Storage.pins.push(this);
     }
 
     createPin = (rectCoords) => {

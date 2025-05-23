@@ -132,13 +132,13 @@ class Component extends CompMaster {
         this.mRect = component;
         Utils.addToCanvas(group)
 
-        console.log(this.width, this.height, this.container.width, this.container.height)
-
+ 
     }
 
     setUpImage = () => {
         // const url = BackendHelper.API_URL + this.icon.replace('uploads\\', '',);
-        const url = BackendHelper.API_URL + (this.icon ? !this.icon.includes('uploads') ? 'uploads/' + this.icon : this.icon.replace('uploads\\', 'uploads/',) : '');
+        // const url = BackendHelper.API_URL + (this.icon ? !this.icon.includes('uploads') ? 'uploads/' + this.icon : this.icon.replace('uploads\\', 'uploads/',) : '');
+        const url = 'https://editorbackend.autoclinic.site/' + (this.icon ? !this.icon.includes('uploads') ? 'uploads/' + this.icon : this.icon.replace('uploads\\', 'uploads/',) : '')
 
         // const image = new Utils.fabric.Image(Loader.storeImages.find(imgObj => imgObj.url === url).image);
         Utils.fabric.Image.fromURL(url, (image) => {
@@ -155,6 +155,9 @@ class Component extends CompMaster {
                 scaleY: this.iconScale,
             })
             this.image = image;
+            if(this.icon){
+                this.container.addWithUpdate(image);
+            }
             // this.container.addWithUpdate(image);
             Utils.requestRenderAll();
         });
@@ -162,9 +165,6 @@ class Component extends CompMaster {
 
     setUpPins = (pinsObj) => {
         const { left, top } = this.container;
-
-
-        console.log(pinsObj)
 
         for (const pObj of pinsObj) {
             const pin = new Pin(pObj, this.dispatch, this).createPin(this.container);
@@ -220,6 +220,7 @@ class Component extends CompMaster {
             pin,
             fontSize: 12,
         }, this.dispatch, left, top + Utils.getVertAdder(Config.pinRadius * 3, pin.direction, true));
+
 
         textWidget.isConnectionType = true;
         textWidget.isCompCode = false;
@@ -444,8 +445,10 @@ class Component extends CompMaster {
 
                 let info = null;
 
-                console.log(connection.source, connection.target, connection.sourcePin.pinNum, connection.targetPin.pinNum)
-                
+                if(!connection.sourcePin || !connection.targetPin){
+                    continue;
+                }
+
                 if(connection.target.isEcm){
                     info = {
                         ecmPinNum: connection.targetPin.pinNum,
@@ -473,6 +476,11 @@ class Component extends CompMaster {
                 
                 
             }else {
+
+                if(!connection.sourcePin || !connection.targetPin){
+                    continue;
+                }
+
                 const opp = connection.source == this ? connection.target : connection.source;
                 const pinNum = connection.source == this ? connection.sourcePin.pinNum : connection.targetPin.pinNum;
                 const infoTypes = this.getEndPin(connection, opp, [], pinNum);
@@ -488,7 +496,6 @@ class Component extends CompMaster {
     }
 
     getEndPin = (oConnection, component, infoTypes, pinNum) => {
-        console.log(component.connectionPool)
         for(const connection of component.connectionPool){
             if(connection != oConnection){
 
@@ -515,7 +522,6 @@ class Component extends CompMaster {
                             type: connection.type
                         }
                         infoTypes.push(info);
-                        console.log(info)
                         return infoTypes;
                     }
                     
@@ -572,6 +578,21 @@ class Component extends CompMaster {
 
     getTroubleCodes = () => {
         return this.data.dtcArr;
+    }
+
+    showConnectionTypeForPin = (is, pinId) => {
+        for (const textWidget of this.textWidgets) {
+
+            if (textWidget.isConnectionType && textWidget.pinId === pinId) {
+                if (is) {
+                    
+                    textWidget.show();
+                } else {
+                    textWidget.hide();
+                }
+            }
+        }
+
     }
 
 }

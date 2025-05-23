@@ -11,6 +11,7 @@ class Storage {
     static textWidegts = [];
     static nCircles = [];
     static shields = [];
+    static pins = [];
     static arrowGroups = [];
 
     static findComponentById = (id) => this.components.find(component => component.id === id)
@@ -25,6 +26,9 @@ class Storage {
     static findNCircleById = id => this.nCircles.find(nCircle => nCircle.id === id);
     static findShieldById = (id) => this.shields.find(shield => shield.id === id);
     static findArrowGroupById = id => this.arrowGroups.find(arrowGroup => arrowGroup.id === id);
+
+    
+    static findPinById = (id) => this.pins.find(pin => pin.id === id);
 
     static findWireById = (id) => {
         for(const connection of this.connections){

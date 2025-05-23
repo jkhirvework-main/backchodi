@@ -174,51 +174,7 @@ class NCircle extends CompMaster {
     }
 
     setUpCallback = () => {
-        this.circle.on('mousedown', (e) => {
-            console.log('Circle => ', this.id, this.connectionPool)
-
-            Utils.dispatchConnnectionFocus(this.dispatch, this.id, Naming.NCircle)
-
-        })
-
-        this.object.on('moving', (e) => {
-            if (NCircle.ahmDirection == null) {
-                NCircle.ahmDirection = this.direction;
-            }
-
-            for (const connection of this.connectionPool) {
-                connection.move(this);
-            }
-
-            Connection.singleMovingComps = [];
-
-            for (const nCircle of Storage.nCircles) {
-                nCircle.isPreConnection = false;
-            }
-
-            Utils.staticConnections = []
-            Utils.singleMovingComps = []
-            this.moveText();
-
-            Utils.testNum = Utils.testNum + 1;
-        })
-
-        this.object.on('mouseup', (e) => {
-            
-            
-            const {left, top} = this.object;
-            const {x, y} = Utils.getExactPoint(left, top);
-            this.moveTo(x, y)
-            
-            Connection.singleMovingComps = []
-            for (const nCircle of Storage.nCircles) {
-                nCircle.isPreConnection = false;
-            }
-
-
-
-            NCircle.ahmDirection = null;
-        });
+        
 
     }
 

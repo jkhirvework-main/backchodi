@@ -49,6 +49,7 @@ class DataLoader {
             this.loadShields(this.data.data);
             this.loadConnections();
             this.loadTextWidgets(this.data.textWidgets);
+            this.loadAfter();
             const arrowGroups = this.loadArrowGroups(this.data.data.arrowGroups)
 
 
@@ -106,6 +107,7 @@ class DataLoader {
                 const { sourcePin, targetPin } = connection;
 
 
+                // console.log(sourcePin, targetPin, 'sourcePin, targetPin')
                 if (sourcePin) {
                     const { component, pin } = Storage.findComponentPinById(sourcePin.id);
                     component.createConnectionTypeText(connection, pin);
@@ -143,8 +145,7 @@ class DataLoader {
             // const data = await Loader.loadComponent(component.rCompId, component.isVar, component.varId);
 
             const data = await Loader.formatComponent(component, nCompsData);
-
-            console.log(data, component, nCompsData, 'data')
+            
             if (!data.width) {
                 data.width = 100;
                 data.height = 100;
@@ -390,6 +391,27 @@ class DataLoader {
         }
 
         return comp;
+    }
+
+     loadAfter = () => {
+        for (const component of Storage.components) {
+            // const pins = [...component.upperPinsArr, ...component.lowerPinsArr];
+
+            // for(const pin of pins){
+            //     console.log(pin.isConnectionTypeVisible)
+            //     if(pin.isConnectionTypeVisible){
+            //         pin.mainComponent.showConnectionTypeForPin(pin.isConnectionTypeVisible, pin.id)
+            //     }
+            // }
+
+            for (const textWidget of component.textWidgets) {
+                if (textWidget.isConnectionType) {
+                    const pin = Storage.findPinById(textWidget.pinId);
+                    const isConnectionTypeVisible = pin.isConnectionTypeVisible
+                    component.showConnectionTypeForPin(isConnectionTypeVisible, textWidget.pinId)
+                }
+            }
+        }
     }
 
 
