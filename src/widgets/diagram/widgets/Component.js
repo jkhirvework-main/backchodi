@@ -548,8 +548,8 @@ class Component extends CompMaster {
             const {pin: sourcePin, component: sourceComponent} = Storage.findComponentPinById(sourcePinId);
             const {pin: targetPin, component: targetComponent} = Storage.findComponentPinById(targetPinId);
 
-
-            if(sourceComponent.isEcm){
+            
+            if(sourceComponent && sourceComponent.isEcm){
                 checks.push({
                     componentPin: targetPin.pinNum,
                     ecmPin: sourcePin.pinNum,
@@ -560,7 +560,7 @@ class Component extends CompMaster {
                 })
             }
 
-            if(targetComponent.isEcm){
+            if(targetComponent && targetComponent.isEcm){
                 checks.push({
                     componentPin: sourcePin.pinNum,
                     ecmPin: targetPin.pinNum,
